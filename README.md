@@ -1,5 +1,9 @@
 # classpoint-spammer
 
+## Replit 🚀
+
+[![Run on Repl.it](https://repl.it/badge/github/p55d2k/classpoint-spammer)](https://repl.it/github/p55d2k/classpoint-spammer)
+
 ## About 📚
 
 this is a python program that uses selenium and requests to spam classpoint codes to try to go into a random classpoint class.
@@ -9,7 +13,7 @@ this is a python program that uses selenium and requests to spam classpoint code
 - python 3.8 or higher
 - requests (`pip install requests`)
 
-## To get started 🚀
+## To get started 🎉
 
 1. clone the repository with `git clone https://github.com/p55d2k/classpoint-spammer.git`
 2. cd into the directory with `cd classpoint-spammer`
