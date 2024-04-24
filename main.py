@@ -21,7 +21,7 @@ print_version("\nSearching...\n")
 with open(f"links/links_{starttime}.txt", "w") as f:
     f.write("")
 
-code = 10200
+code = 10000
 
 while code < 99999:
     data = requests.get(f"https://apitwo.classpoint.app/classcode/region/byclasscode?classcode={code}")
