@@ -21,7 +21,7 @@ if len(sys.argv) > 1:
     AMOUNT_THREADS = parse_args(sys.argv[1:])
 
 print("\033c")
-print(f"classpoint-spammer v{VERSION}\nSearching...\n")
+print(f"classpoint-scanner v{VERSION}\nStarting search now...\n")
 
 create_links_file(starttime)
 
@@ -89,9 +89,13 @@ def search_code(c, driver):
         return
 
 
-def search_codes(start, end, driver):
+def search_codes(start, end, driver, thread_no):
     for code in range(start, end):
         search_code(code, driver)
+
+    print(
+        f"Search completed for thread {thread_no}, searching from {start} to {end}.\nLinks saved to links.txt\n"
+    )
 
 
 code = START_CODE
@@ -102,18 +106,17 @@ thread_increment = (END_CODE - START_CODE) // AMOUNT_THREADS
 for i in range(AMOUNT_THREADS):
     driver = get_driver()
 
-    threads.append(
-        threading.Thread(
-            target=search_codes, args=(code, code + thread_increment, driver)
-        )
+    thread = threading.Thread(
+        target=search_codes, args=(code, code + thread_increment, driver, i + 1)
     )
+    thread.daemon = True
+
+    threads.append(thread)
 
     code += thread_increment
 
 for thread in threads:
     thread.start()
 
-for thread in threads:
-    thread.join()
-
-print("Search completed. Links saved to links/links_" + starttime + ".txt\n")
+while True:
+    time.sleep(1)

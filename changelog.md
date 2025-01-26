@@ -1,4 +1,4 @@
-## classpoint-spammer changelog
+## classpoint-scanner changelog
 
 ### v1.2.0 - 15/01/2025
 

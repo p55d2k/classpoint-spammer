@@ -23,14 +23,14 @@ If no options are provided, the program will run with default settings."""
         print("Output file name: /links/links_{current_datetime}.txt")
         sys.exit(0)
     elif args[0] == "-v" or args[0] == "--version":
-        print(f"classpoint-spammer v{VERSION}")
+        print(f"classpoint-scanner v{VERSION}")
         sys.exit(0)
     elif args[0] == "-t" or args[0] == "--threads":
         if len(args) < 2:
             print("Invalid option. Use -h or --help for help.")
             sys.exit(1)
         elif args[1].isnumeric():
-            return min(int(args[1]), 128)
+            return max(min(int(args[1]), 128), 1)
         else:
             print("Invalid option. Use -h or --help for help.")
             sys.exit(1)
